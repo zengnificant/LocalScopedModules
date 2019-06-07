@@ -2,7 +2,6 @@ from sublime import Region
 from .str_utils import get_quote, get_prefix
 from .settings_utils import get_root_prefix, get_scope_prefix
 from .paths import get_cur_proj,  get_scopes, is_valid_root, is_valid_scope
-
 import re
 
 

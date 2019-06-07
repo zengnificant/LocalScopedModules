@@ -1,5 +1,4 @@
 from sublime import Region
-
 from sublime_plugin import EventListener, TextCommand
 import os
 from os.path import isdir
@@ -7,13 +6,13 @@ from os import listdir
 from .utils.editor_utils import get_source_at_sel, get_cur_path
 from .utils.str_utils import get_prefix,  get_quote
 from .utils.paths import get_cur_proj, get_scopes, sorted_dir_files
+from .utils.settings_utils import get_verbose, get_scope_prefix
 
-from .utils.settings import get_pref
 from .utils.verbose import verbose_new_line
 sep = os.sep
 
 
-class removeNextLineCommand(TextCommand):
+class lsmVerboseCommand(TextCommand):
 
     def run(self, edit):
         view = self.view
@@ -23,10 +22,13 @@ class removeNextLineCommand(TextCommand):
 class LSMComplete(EventListener):
 
     def on_pre_save(self, view):
-        source = get_source_at_sel(view)
-        if not source:
+        verbose = get_verbose()
+        if not verbose:
             return
-        view.run_command('remove_next_line')
+        cur_path = get_cur_path(view)
+        if not cur_path:
+            return
+        view.run_command('lsm_verbose')
 
     def on_selection_modified_async(self, view):
 
@@ -51,7 +53,7 @@ class LSMComplete(EventListener):
             return
         completions = []
         prefix = get_prefix(source)
-        scope_prefix = get_pref('lsm_scope_prefix')
+        scope_prefix = get_scope_prefix()
         filename = view.file_name()
         scopes = get_scopes(filename)
         if not scopes:

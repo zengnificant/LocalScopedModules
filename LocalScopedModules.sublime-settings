@@ -1,7 +1,7 @@
 {
     "lsm_root_prefix": "~",
     "lsm_scope_prefix": "@",
-    "lsm_verbose": false,
+    "lsm_verbose": true,
     "lsm_projects": [
     {
         "project_root": "/Users/zimo/www/react-app/editor/",

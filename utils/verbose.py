@@ -13,43 +13,22 @@ def get_next_line(view, a):
     return next_line
 
 
-def get_next2_line(view, a):
-    next_line = get_next_line(view, a)
-    next2_line = get_next_line(view, next_line.a)
-    return next2_line
-
-
-def new_line_not_empty(view, edit, enable_max_skip=True):
-    sel = view.sel()[0].a
-    next_line = get_next_line(view, sel)
-    count = 0
-    max_skip = 5
-    while view.substr(next_line.a) == '\n':
-        sel = next_line.b
-        next_line = get_next_line(view, sel)
-        if enable_max_skip:
-            if count >= 5:
-                break
-            count += 1
-    return next_line
-
-
 scope = {"dir": "~/babel-plugin", "name": "@plugin"}
 
 
 def verbose_new_line(view, edit, scope=scope):
-    next_line = new_line_not_empty(view, edit)
-    next2_line = get_next2_line(view, next_line.a)
-    content = '//' + scope['name'] + ' : ' + scope['dir']
-    ret_line = content + '\n\n'
+    sel = view.sel()[0].a
+    next_line = get_next_line(view, sel)
     next_line_str = view.substr(next_line)
-    next2_line_str = view.substr(next2_line)
-    if next2_line_str == '\n':
-        ret_line = ret_line[:-1]
+    content = '//' + scope['name'] + ' : ' + scope['dir']
+    ret_line = content + '\n'
     if not next_line_str.startswith(content):
-        view.insert(edit, next_line, ret_line)
-        return
-    view.replace(edit, next_line, ret_line)
-
+        view.insert(edit, next_line.a, ret_line)
+    next2_line = get_next_line(view, next_line.a)
+    next2_line_str = view.substr(next2_line)
+    if not next2_line_str == '\n':
+        view.insert(edit, next2_line.a, '\n')
+    view.sel().clear()
+    view.sel().add(next_line)
 
 #
