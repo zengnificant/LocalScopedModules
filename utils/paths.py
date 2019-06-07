@@ -3,10 +3,6 @@ from os import listdir
 from .settings_utils import get_projects, get_scope_prefix
 
 
-def get_scope_prefix2():
-    return get_scope_prefix()
-
-
 def delete_slash_at_end(path):
     while True:
         lenlen = len(path)

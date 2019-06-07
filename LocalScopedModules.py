@@ -7,7 +7,6 @@ from .utils.editor_utils import get_source_at_sel, get_cur_path
 from .utils.str_utils import get_prefix,  get_quote
 from .utils.paths import get_cur_proj, get_scopes, sorted_dir_files
 from .utils.settings_utils import get_verbose, get_scope_prefix
-
 from .utils.verbose import verbose_new_line
 sep = os.sep
 

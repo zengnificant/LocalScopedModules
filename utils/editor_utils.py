@@ -34,6 +34,18 @@ def get_source_at_sel(view):
     return source
 
 
+class Scope_cache():
+    scope = None
+
+    @staticmethod
+    def get_scope():
+        return Scope_cache.scope
+
+    @staticmethod
+    def set_scope(scope):
+        Scope_cache.scope = scope
+
+
 def get_cur_path(view, add_path=''):
     source = get_source_at_sel(view)
     if not source:
@@ -53,7 +65,9 @@ def get_cur_path(view, add_path=''):
     if scopes and len(scopes):
         for scope in scopes:
             if type(scope) != dict and (not 'name' in scope or not 'dir' in scope):
+                Scope_cache.set_scope(None)
                 return
+            Scope_cache.set_scope(scope)
             scope_name = scope['name']
             scope_dir = scope['dir'].replace(root_prefix, project_root)
             if is_valid_scope(source, scope_name):
