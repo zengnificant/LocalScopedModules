@@ -44,7 +44,7 @@ def verbose_new_line(view, edit, scope=scope):
     ret_line = content + '\n\n'
     next_line_str = view.substr(next_line)
     next2_line_str = view.substr(next2_line)
-    if next2_line_str == '\n'
+    if next2_line_str == '\n':
         ret_line = ret_line[:-1]
     if not next_line_str.startswith(content):
         view.insert(edit, next_line, ret_line)
