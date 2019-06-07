@@ -67,10 +67,11 @@ def get_cur_path(view, add_path=''):
             if type(scope) != dict and (not 'name' in scope or not 'dir' in scope):
                 Scope_cache.set_scope(None)
                 return
-            Scope_cache.set_scope(scope)
+            Scope_cache.set_scope(None)
             scope_name = scope['name']
             scope_dir = scope['dir'].replace(root_prefix, project_root)
             if is_valid_scope(source, scope_name):
                 source = source.replace(scope_name, scope_dir)
+                Scope_cache.set_scope(scope)
                 return source
     return
