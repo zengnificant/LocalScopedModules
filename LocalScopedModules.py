@@ -9,7 +9,7 @@ from .utils.str_utils import get_prefix,  get_quote
 from .utils.paths import get_cur_proj, get_scopes, sorted_dir_files
 
 from .utils.settings import get_pref
-from .utils.verbose import new_line_not_empty
+from .utils.verbose import verbose_new_line
 sep = os.sep
 
 
@@ -17,9 +17,7 @@ class removeNextLineCommand(TextCommand):
 
     def run(self, edit):
         view = self.view
-        next_line = new_line_not_empty(view, edit)
-        strings = view.substr(next_line)
-        print([strings])
+        verbose_new_line(view, edit)
 
 
 class LSMComplete(EventListener):
