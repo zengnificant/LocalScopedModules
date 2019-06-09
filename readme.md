@@ -23,7 +23,7 @@ git clone git@github.com:zengnificant/LocalScopedModules.git
 Usage
 -----------------
 
-Set up a config file  `LocalScopedModules.sublime-settings` in the sublime's `packages/User` dir. Follow  default config file. and  Config for your projects. Then it's working!
+Set up a config file  `LocalScopedModules.sublime-settings` in the sublime's `packages/User` dir. Follow  [default config file](https://github.com/zengnificant/LocalScopedModules/blob/master/LocalScopedModules.sublime-settings). and  Config for your projects. Then it's working!
 
 
 
