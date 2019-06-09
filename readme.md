@@ -37,7 +37,7 @@ So I made [a patch](https://github.com/zengnificant/patch/blob/master/autofilena
 Procedure:
 
 1.  Open sublime text -> Preferences -> Browser Packages ->`Installed Packages`
-->rename the `AutoFileName.sublime-package` as  `AutoFileName.zip` ->
+->rename the `AutoFileName.sublime-package` as  `AutoFileName.zip` 
 ->unzip `AutoFileName.zip`  and remove the file of `package-metadata.json` (if not it'll be automaticly deleted by sublime).
 
 2. from  Step 1,you got the `AutoFileName` package, replace the default in the   `AutoFileName` package with [the patch](https://github.com/zengnificant/patch/blob/master/autofilename/autofilename.py). Then put the `AutoFileName` package to sublime's `Packages` dir.
