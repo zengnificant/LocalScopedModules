@@ -1,18 +1,33 @@
 {
     "lsm_root_prefix": "~",
     "lsm_scope_prefix": "@",
-    "lsm_verbose": true,
+
+    // when verbose option is set true ,it will insert  info about the scope_name in the next line. it will effect only when the cursor is right after a scope_dir upon saving. ie: import bar from '@foo/bar|',the vertical line means cursor,and  the dir's actual path should exist.
+    "lsm_verbose": false,
+
+    //projects that need auto-completions
     "lsm_projects": [
-    {
-        "project_root": "/Users/zimo/www/react-app/editor/",
+        /*
+    {   
+        //absolute_path
+        "project_root": "/path/to/proj0",
         "scopes": [
         {
-            "name": "@plugin",
-            "dir": "~/babel-plugin"
+            "name": "@foo",
+            "dir": "~/foo"
 
         }]
     },
     {
-        "project_root": "/Users/zimo/www/react-app/webapp/"
-    }]
+        //absolute_path
+        "project_root":"/path/to/proj1",
+        "scopes": [
+        {
+            "name": "@bar",
+            "dir": "~/bar"
+        }]
+    }
+    */
+    ]
+
 }

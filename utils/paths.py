@@ -2,11 +2,13 @@ from os.path import isdir
 from os import listdir
 from .settings_utils import get_projects, get_scope_prefix
 
+sep = os.sep
+
 
 def delete_slash_at_end(path):
     while True:
         lenlen = len(path)
-        if path.endswith('/'):
+        if path.endswith(sep):
             path = path[:lenlen - 1]
         else:
             break
@@ -47,13 +49,13 @@ def get_scopes(filename):
 
 
 def is_valid_root(str, root_prefix):
-    if str.startswith(root_prefix + '/') and str.count(root_prefix) == 1:
+    if str.startswith(root_prefix + sep) and str.count(root_prefix) == 1:
         return True
     return False
 
 
 def is_valid_scope(str, scope_name):
-    if str.startswith(scope_name + '/') and str.count(scope_name) == 1:
+    if str.startswith(scope_name + sep) and str.count(scope_name) == 1:
         return True
     if str == scope_name:
         return True
