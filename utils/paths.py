@@ -1,3 +1,4 @@
+import os
 from os.path import isdir
 from os import listdir
 from .settings_utils import get_projects, get_scope_prefix
