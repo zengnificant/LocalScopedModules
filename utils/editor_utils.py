@@ -46,6 +46,20 @@ class Scope_cache():
         Scope_cache.scope = scope
 
 
+def flat_scopes(scopes):
+    ret = []
+    for scope in scopes:
+        ret.append({'name': scope['name'], 'dir': scope['dir']})
+        if 'alias' in scope:
+            if type(scope['alias']) == str:
+                ret.append({'name': scope['alias'], 'dir': scope['dir']})
+            if type(scope['alias']) == list:
+                for name in scope['alias']:
+                    ret.append({'name': name, 'dir': scope['dir']})
+
+    return ret
+
+
 def get_cur_path(view, add_path=''):
     source = get_source_at_sel(view)
     if not source:
@@ -67,11 +81,15 @@ def get_cur_path(view, add_path=''):
             if type(scope) != dict and (not 'name' in scope or not 'dir' in scope):
                 Scope_cache.set_scope(None)
                 return
-            Scope_cache.set_scope(None)
-            scope_name = scope['name']
-            scope_dir = scope['dir'].replace(root_prefix, project_root)
-            if is_valid_scope(source, scope_name):
-                source = source.replace(scope_name, scope_dir)
-                Scope_cache.set_scope(scope)
-                return source
+
+    scopes = flat_scopes(scopes)
+    print(scopes)
+    for scope in scopes:
+        Scope_cache.set_scope(None)
+        scope_name = scope['name']
+        scope_dir = scope['dir'].replace(root_prefix, project_root)
+        if is_valid_scope(source, scope_name):
+            source = source.replace(scope_name, scope_dir)
+            Scope_cache.set_scope(scope)
+            return source
     return

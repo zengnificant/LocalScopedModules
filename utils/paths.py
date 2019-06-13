@@ -40,13 +40,32 @@ def get_cur_proj(filename):
     return cur_proj
 
 
+def flat_scopes(scopes):
+    ret = []
+    for scope in scopes:
+        ret.append({'name': scope['name'], 'dir': scope['dir']})
+        if 'alias' in scope:
+            if type(scope['alias']) == str:
+                ret.append({'name': scope['alias'], 'dir': scope['dir']})
+            if type(scope['alias']) == list:
+                for name in scope['alias']:
+                    ret.append({'name': name, 'dir': scope['dir']})
+
+    return ret
+
+
 def get_scopes(filename):
     proj = get_cur_proj(filename)
     if not proj:
         return
+    scopes = []
     if 'scopes' in proj:
-        return proj['scopes']
-    return
+        scopes = proj['scopes']
+    if scopes and len(scopes):
+        for scope in scopes:
+            if type(scope) != dict and (not 'name' in scope or not 'dir' in scope):
+                return
+    return flat_scopes(scopes)
 
 
 def is_valid_root(str, root_prefix):
