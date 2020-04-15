@@ -36,6 +36,17 @@ class LSMComplete(EventListener):
         sel = view.sel()[0]
         if not sel.empty():
             return
+
+        source = get_source_at_sel(view)
+
+        if not source:
+            return
+
+        scope_prefix = get_scope_prefix()
+        if source == scope_prefix:
+            view.run_command('auto_complete')
+            return
+
         cur_path = get_cur_path(view)
         if not cur_path:
             return
@@ -43,20 +54,21 @@ class LSMComplete(EventListener):
         if not isdir(cur_path):
             return
         if view.substr(sel.a - 1) == sep:
-            view.run_command('auto_complete', {
-                'disable_auto_insert': True, 'next_completion_if_showing': False})
+            view.run_command('auto_complete')
+
+    def on_modified_async(self, view):
+        view.run_command('hide_auto_complete',
+                         {'disable_auto_insert': True,
+                          'next_completion_if_showing': False})
 
     def on_query_completions(self, view, prefix, locations):
-        source = get_source_at_sel(view)
-        if not source:
-            return
         completions = []
-        prefix = get_prefix(source)
         scope_prefix = get_scope_prefix()
         filename = view.file_name()
         scopes = get_scopes(filename)
         if not scopes:
             return
+        source = get_source_at_sel(view)
         if source == scope_prefix:
             if not scopes or not len(scopes):
                 return

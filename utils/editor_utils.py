@@ -12,8 +12,7 @@ def get_module_specifier(strs):
     return ret[-1]
 
 
-def get_source_at_sel(view):
-
+def get_likely_source_at_sel(view):
     sel = view.sel()[0].a
     name = view.scope_name(sel)
     at_string_of_js = '.js' in name and 'string.quoted' in name
@@ -23,12 +22,22 @@ def get_source_at_sel(view):
     start_to_sel = Region(current_line.a, sel)
     almost_source = view.substr(start_to_sel)
     quote = get_quote(almost_source)
+    if not quote:
+        return
     source_before = almost_source[:almost_source.rfind(quote)]
     specifier = get_module_specifier(source_before)
     if not specifier:
         return
     source = almost_source[almost_source.rfind(quote) + 1:]
+    return source
+
+
+def get_source_at_sel(view):
+    source = get_likely_source_at_sel(view)
+    if not source:
+        return
     prefix = get_prefix(source)
+
     if not prefix:
         return
     return source
