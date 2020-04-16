@@ -44,7 +44,9 @@ class LSMComplete(EventListener):
 
         scope_prefix = get_scope_prefix()
         if source == scope_prefix:
-            view.run_command('auto_complete')
+            view.run_command('auto_complete',
+                             {'disable_auto_insert': True,
+                              'next_completion_if_showing': False})
             return
 
         cur_path = get_cur_path(view)
@@ -54,7 +56,9 @@ class LSMComplete(EventListener):
         if not isdir(cur_path):
             return
         if view.substr(sel.a - 1) == sep:
-            view.run_command('auto_complete')
+            view.run_command('auto_complete',
+                             {'disable_auto_insert': True,
+                              'next_completion_if_showing': False})
 
     def on_modified_async(self, view):
         view.run_command('hide_auto_complete',
