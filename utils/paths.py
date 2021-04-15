@@ -16,6 +16,18 @@ def delete_slash_at_end(path):
     return path
 
 
+def isChildPath(childPath, mayBeParentPath):
+    listPath = childPath.split(os.sep)
+    listParentPath = mayBeParentPath.split(os.sep)
+    if len(listParentPath) > len(listPath):
+        return False
+    print(childPath, mayBeParentPath, listPath, listParentPath)
+    for index in range(len(listParentPath)):
+        if listParentPath[index] != listPath[index]:
+            return False
+    return True
+
+
 def get_cur_proj(filename):
     projects = get_projects()
     ret_projects = []
@@ -23,7 +35,8 @@ def get_cur_proj(filename):
         if 'project_root' in proj:
             project_root = delete_slash_at_end(proj['project_root'])
             if project_root in filename:
-                ret_projects.append(proj)
+                if isChildPath(filename, project_root):
+                    ret_projects.append(proj)
     if not len(ret_projects):
         return
     cur_proj_root = ''
